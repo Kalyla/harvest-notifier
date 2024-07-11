@@ -12,6 +12,16 @@ async function getHarvestUsers(accountId, token, excludedUsers) {
       Authorization: `Bearer ${token}`,
     },
   });
+
+  // Проверка статуса ответа
+  if (!response.ok) {
+    throw new Error(`HTTP error! Status: ${response.status}`);
+  }
+
+  // Вывод текста ответа для отладки
+  const text = await response.text();
+  console.log('Response text:', text);
+  
   const data = await response.json();
   return data.users.filter(
     (user) => user.is_active && (!excludedUsers || !excludedUsers.split(',').includes(user.email))
