@@ -3,6 +3,9 @@ const fetch = require('node-fetch');
 const moment = require('moment');
 async function getHarvestUsers(accountId, token, excludedUsers) {
   console.log('getHarvestUsers');
+  console.log('Id: ', accountId);
+  console.log('Token: ', token);
+  
   const response = await fetch('https://api.harvestapp.com/v2/users', {
     method: 'get',
     headers: {
