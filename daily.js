@@ -50,6 +50,11 @@ async function getSlackUsers(token) {
       Authorization: `Bearer ${token}`,
     },
   });
+
+  // Проверка статуса ответа
+  if (!response.ok) {
+    throw new Error(`HTTP error! Status: ${response.status}`);
+    
   const data = await response.json();
   return data.members.filter((user) => !user.deleted && !user.is_bot);
 }
