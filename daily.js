@@ -3,8 +3,6 @@ const fetch = require('node-fetch');
 const moment = require('moment');
 async function getHarvestUsers(accountId, token, excludedUsers) {
   console.log('getHarvestUsers');
-  console.log('Id: ', accountId);
-  console.log('Token: ', token);
   
   const response = await fetch('https://api.harvestapp.com/v2/users', {
     method: 'get',
@@ -20,10 +18,6 @@ async function getHarvestUsers(accountId, token, excludedUsers) {
   if (!response.ok) {
     throw new Error(`HTTP error! Status: ${response.status}`);
   }
-
-  // Вывод текста ответа для отладки
-  const text = await response.text();
-  console.log('Response text:', text);
   
   const data = await response.json();
   return data.users.filter(
