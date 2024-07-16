@@ -87,9 +87,10 @@ async function slackNotify(usersToNotify, timeSheetDateToCheck) {
     const slackUsers = await getSlackUsers(process.env.SLACK_TOKEN);
     usersToNotify.forEach((user) => {
       const fullName = `${user.first_name} ${user.last_name}`;
+      const slackUserNames = slackUsers.map(user => user.profile.real_name_normalized);
       console.log('usersToNotify:', fullName);
-      console.log('SlackUsers:', slackUsers.profile.real_name_normalized);
-      console.log('\n')
+      console.log('SlackUsers:', slackUserNames);
+      console.log('---------------------------------------------------\n');
       const slackUser = slackUsers.find(
         (slackUser) =>
           [
