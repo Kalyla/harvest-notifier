@@ -70,7 +70,7 @@ async function dteligence(timeSheetDateToCheck) {
     // Sum up the total_hours from each filtered report
     const totalHours = timeReports.reduce((sum, report) => sum + report.total_hours, 0);
     // Filter developers with totalHours equal to 0
-    if (totalHours === 0 && user.roles.includes('Campaign Manager')) {
+    if (totalHours === 0 && user.roles != 'Campaign Manager') {
       usersToNotify.push({
         ...user,
         totalHours,
