@@ -1,9 +1,9 @@
 require('dotenv').config();
 const fetch = require('node-fetch');
 const moment = require('moment');
+
 async function getHarvestUsers(accountId, token, excludedUsers) {
   console.log('getHarvestUsers');
-  
   const response = await fetch('https://api.harvestapp.com/v2/users', {
     method: 'get',
     headers: {
@@ -13,17 +13,12 @@ async function getHarvestUsers(accountId, token, excludedUsers) {
       Authorization: `Bearer ${token}`,
     },
   });
-
-  // Проверка статуса ответа
-  if (!response.ok) {
-    throw new Error(`HTTP error! Status: ${response.status}`);
-  }
-  
   const data = await response.json();
   return data.users.filter(
     (user) => user.is_active && (!excludedUsers || !excludedUsers.split(',').includes(user.email))
   );
 }
+
 async function getHarvestTeamTimeReport(accountId, token, dateFrom, dateTo) {
   console.log('getHarvestTeamTimeReport');
   const response = await fetch(
@@ -41,6 +36,7 @@ async function getHarvestTeamTimeReport(accountId, token, dateFrom, dateTo) {
   const data = await response.json();
   return data.results;
 }
+
 async function getSlackUsers(token) {
   console.log('getSlackUsers');
   const response = await fetch('https://slack.com/api/users.list', {
@@ -50,15 +46,10 @@ async function getSlackUsers(token) {
       Authorization: `Bearer ${token}`,
     },
   });
-
-  // Проверка статуса ответа
-  if (!response.ok) {
-    throw new Error(`HTTP error! Status: ${response.status}`);
-  }
-    
   const data = await response.json();
   return data.members.filter((user) => !user.deleted && !user.is_bot);
 }
+
 async function dteligence(timeSheetDateToCheck) {
   console.log('dteligence');
   const harvestUsers = await getHarvestUsers(
@@ -78,7 +69,8 @@ async function dteligence(timeSheetDateToCheck) {
     const timeReports = harvestTeamTimeReport.filter((t) => t.user_id === user.id);
     // Sum up the total_hours from each filtered report
     const totalHours = timeReports.reduce((sum, report) => sum + report.total_hours, 0);
-    if (totalHours < process.env.MISSING_HOURS_THRESHOLD) {
+    // Filter developers with totalHours equal to 0
+    if (totalHours === 0 && user.roles.includes('Campaign Manager')) {
       usersToNotify.push({
         ...user,
         totalHours,
@@ -88,6 +80,7 @@ async function dteligence(timeSheetDateToCheck) {
   });
   return usersToNotify;
 }
+
 async function slackNotify(usersToNotify, timeSheetDateToCheck) {
   console.log('slackNotify');
   if (usersToNotify && usersToNotify.length) {
@@ -102,12 +95,9 @@ async function slackNotify(usersToNotify, timeSheetDateToCheck) {
           ].includes(fullName.toLowerCase()) ||
           (slackUser.profile.email || '').toLowerCase() === user.email.toLowerCase()
       );
-      if (user.totalHours == 0 ) 
-      {
-        user.slackUser = slackUser
-          ? `<@${slackUser.id}>`
-          : `${fullName}`;
-      };
+      user.slackUser = slackUser
+        ? `<@${slackUser.id}>`
+        : `${fullName}`;
     });
     console.log(
       'usersToNotify',
@@ -180,6 +170,7 @@ async function slackNotify(usersToNotify, timeSheetDateToCheck) {
     console.log('slackResponse', data);
   } else return;
 }
+
 async function app() {
   let timeSheetDateToCheck;
   const weekday = moment().format('dddd');
@@ -194,4 +185,5 @@ async function app() {
     process.exit();
   }
 }
+
 app();
