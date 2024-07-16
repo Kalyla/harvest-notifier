@@ -63,8 +63,8 @@ async function dteligence(timeSheetDateToCheck) {
     timeSheetDateToCheck,
     timeSheetDateToCheck
   );
-  //const excludedRoles = ['Customer Success Manager','Technical Account Manager','Campaign Manager','Growth Product Manager'];
-  const excludedRoles = []
+  
+  const excludedRoles = ['Customer Success Manager','Technical Account Manager','Campaign Manager','Growth Product Manager'];
   const usersToNotify = [];
   harvestUsers.forEach((user) => {
     // Filter reports by user_id
@@ -74,11 +74,17 @@ async function dteligence(timeSheetDateToCheck) {
     // Filter developers with totalHours equal to 0
     // console.log(user.first_name, ' ', user.roles);
     if (totalHours === 0) {
-      console.log('Check: ', user.first_name, ' ', user.roles, '\n')
-      usersToNotify.push({
-        ...user,
-        totalHours,
-      });
+      const userRoles = user.roles;
+      const hasExcludedRole = userRoles.some(role => excludedRoles.includes(role));
+
+      if (!hasExcludedRole) 
+      {
+        console.log('Check: ', user.first_name, ' ', user.roles, '\n')
+        usersToNotify.push({
+          ...user,
+          totalHours,
+        }); 
+      }
     }
     // console.log('usersToNotify', usersToNotify);
   });
