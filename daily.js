@@ -72,13 +72,14 @@ async function dteligence(timeSheetDateToCheck) {
     const totalHours = timeReports.reduce((sum, report) => sum + report.total_hours, 0);
     // Filter developers with totalHours equal to 0
     console.log(user.first_name, ' ', user.roles);
-    if (totalHours === 0 && !excludedRoles.includes( user.roles)) {
+    if (totalHours === 0 && excludedRoles.includes( user.roles)) {
+      console.log(user.roles, '\n')
       usersToNotify.push({
         ...user,
         totalHours,
       });
     }
-    console.log('usersToNotify', usersToNotify);
+    // console.log('usersToNotify', usersToNotify);
   });
   return usersToNotify;
 }
@@ -155,22 +156,22 @@ async function slackNotify(usersToNotify, timeSheetDateToCheck) {
         ],
       },
     ];
-     const response = await fetch(
-       `https://slack.com/api/chat.postMessage?channel=${
-         process.env.SLACK_CHANNEL
-       }&blocks=${encodeURIComponent(JSON.stringify(slackBlocks))}&pretty=1`,
-       {
-         method: 'post',
-         headers: {
-           'Content-Type': 'application/x-www-form-urlencoded',
-           Accept: 'application/json',
-           charset: 'utf-8',
-           Authorization: `Bearer ${process.env.SLACK_TOKEN}`,
-         },
-       }
-     );
-    const data = await response.json();
-    console.log('slackResponse', data);
+    //  const response = await fetch(
+    //    `https://slack.com/api/chat.postMessage?channel=${
+    //      process.env.SLACK_CHANNEL
+    //    }&blocks=${encodeURIComponent(JSON.stringify(slackBlocks))}&pretty=1`,
+    //    {
+    //      method: 'post',
+    //      headers: {
+    //        'Content-Type': 'application/x-www-form-urlencoded',
+    //        Accept: 'application/json',
+    //        charset: 'utf-8',
+    //        Authorization: `Bearer ${process.env.SLACK_TOKEN}`,
+    //      },
+    //    }
+    //  );
+    // const data = await response.json();
+    // console.log('slackResponse', data);
   } else return;
 }
 
