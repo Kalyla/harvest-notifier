@@ -63,6 +63,7 @@ async function dteligence(timeSheetDateToCheck) {
     timeSheetDateToCheck,
     timeSheetDateToCheck
   );
+  const rolesToNotify = ['', 'Frontend Developer'];
   const usersToNotify = [];
   harvestUsers.forEach((user) => {
     // Filter reports by user_id
@@ -70,7 +71,7 @@ async function dteligence(timeSheetDateToCheck) {
     // Sum up the total_hours from each filtered report
     const totalHours = timeReports.reduce((sum, report) => sum + report.total_hours, 0);
     // Filter developers with totalHours equal to 0
-    if (totalHours === 0 && user.roles != 'Campaign Manager') {
+    if (totalHours === 0 && && rolesToNotify.includes(user.roles)) {
       usersToNotify.push({
         ...user,
         totalHours,
@@ -85,12 +86,9 @@ async function slackNotify(usersToNotify, timeSheetDateToCheck) {
   console.log('slackNotify');
   if (usersToNotify && usersToNotify.length) {
     const slackUsers = await getSlackUsers(process.env.SLACK_TOKEN);
-    const slackUserNames = slackUsers.map(user => user.profile.email);
-    console.log('SlackUsers:', slackUserNames);
+    
     usersToNotify.forEach((user) => {
       const fullName = `${user.first_name} ${user.last_name}`;
-      console.log('usersToNotify:', fullName, ' ', user.email);
-      console.log('---------------------------------------------------\n');
       const slackUser = slackUsers.find(
         (slackUser) =>
           [
@@ -156,21 +154,21 @@ async function slackNotify(usersToNotify, timeSheetDateToCheck) {
         ],
       },
     ];
-    // const response = await fetch(
-    //   `https://slack.com/api/chat.postMessage?channel=${
-    //     process.env.SLACK_CHANNEL
-    //   }&blocks=${encodeURIComponent(JSON.stringify(slackBlocks))}&pretty=1`,
-    //   {
-    //     method: 'post',
-    //     headers: {
-    //       'Content-Type': 'application/x-www-form-urlencoded',
-    //       Accept: 'application/json',
-    //       charset: 'utf-8',
-    //       Authorization: `Bearer ${process.env.SLACK_TOKEN}`,
-    //     },
-    //   }
-    // );
-    //const data = await response.json();
+     const response = await fetch(
+       `https://slack.com/api/chat.postMessage?channel=${
+         process.env.SLACK_CHANNEL
+       }&blocks=${encodeURIComponent(JSON.stringify(slackBlocks))}&pretty=1`,
+       {
+         method: 'post',
+         headers: {
+           'Content-Type': 'application/x-www-form-urlencoded',
+           Accept: 'application/json',
+           charset: 'utf-8',
+           Authorization: `Bearer ${process.env.SLACK_TOKEN}`,
+         },
+       }
+     );
+    const data = await response.json();
     console.log('slackResponse', data);
   } else return;
 }
