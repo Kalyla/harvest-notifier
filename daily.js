@@ -63,7 +63,8 @@ async function dteligence(timeSheetDateToCheck) {
     timeSheetDateToCheck,
     timeSheetDateToCheck
   );
-  const excludedRoles = ['Customer Success Manager','Technical Account Manager','Campaign Manager','Growth Product Manager'];
+  //const excludedRoles = ['Customer Success Manager','Technical Account Manager','Campaign Manager','Growth Product Manager'];
+  const excludedRoles = []
   const usersToNotify = [];
   harvestUsers.forEach((user) => {
     // Filter reports by user_id
