@@ -73,7 +73,7 @@ async function dteligence(timeSheetDateToCheck) {
     // Filter developers with totalHours equal to 0
     console.log(user.first_name, ' ', user.roles);
     if (totalHours === 0 && excludedRoles.includes( user.roles)) {
-      console.log(user.roles, '\n')
+      console.log('Check: ', user.roles, '\n')
       usersToNotify.push({
         ...user,
         totalHours,
