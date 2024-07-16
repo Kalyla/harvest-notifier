@@ -102,12 +102,12 @@ async function slackNotify(usersToNotify, timeSheetDateToCheck) {
           ].includes(fullName.toLowerCase()) ||
           (slackUser.profile.email || '').toLowerCase() === user.email.toLowerCase()
       );
-      user.slackUser = slackUser
-        if (user.totalHours == 0 ) 
-        {
+      if (user.totalHours == 0 ) 
+      {
+        user.slackUser = slackUser
           ? `<@${slackUser.id}>`
           : `${fullName}`;
-        }
+      };
     });
     console.log(
       'usersToNotify',
