@@ -63,7 +63,7 @@ async function dteligence(timeSheetDateToCheck) {
     timeSheetDateToCheck,
     timeSheetDateToCheck
   );
-  const rolesToNotify = ['Customer Success Manager','Technical Account Manager','Campaign Manager','Solution Consultant','Campaign management Team Lead','Growth Product Manager'];
+  const rolesToNotify = ['Customer Success Manager','Technical Account Manager','Campaign Manager','Growth Product Manager'];
   const usersToNotify = [];
   harvestUsers.forEach((user) => {
     // Filter reports by user_id
@@ -72,7 +72,7 @@ async function dteligence(timeSheetDateToCheck) {
     const totalHours = timeReports.reduce((sum, report) => sum + report.total_hours, 0);
     // Filter developers with totalHours equal to 0
     console.log(user.first_name, ' ', user.roles);
-    if (totalHours === 0 && rolesToNotify.includes(user.roles)) {
+    if (totalHours === 0 && user.roles.includes(rolesToNotify) {
       usersToNotify.push({
         ...user,
         totalHours,
