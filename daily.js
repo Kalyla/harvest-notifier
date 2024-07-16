@@ -64,7 +64,7 @@ async function dteligence(timeSheetDateToCheck) {
     timeSheetDateToCheck
   );
   
-  const excludedRoles = ['Customer Success Manager','Technical Account Manager','Campaign Manager','Growth Product Manager'];
+  const excludedRoles = ['DevOps','QA Engineer','ML Engineer','Backend Developer','Frontend Developer'];
   const usersToNotify = [];
   harvestUsers.forEach((user) => {
     // Filter reports by user_id
@@ -77,7 +77,7 @@ async function dteligence(timeSheetDateToCheck) {
       const userRoles = user.roles;
       const hasExcludedRole = userRoles.some(role => excludedRoles.includes(role));
 
-      if (!hasExcludedRole) 
+      if (hasExcludedRole) 
       {
         console.log('Check: ', user.first_name, ' ', user.roles, '\n')
         usersToNotify.push({
