@@ -71,9 +71,9 @@ async function dteligence(timeSheetDateToCheck) {
     // Sum up the total_hours from each filtered report
     const totalHours = timeReports.reduce((sum, report) => sum + report.total_hours, 0);
     // Filter developers with totalHours equal to 0
-    console.log(user.first_name, ' ', user.roles);
-    if (totalHours === 0 && excludedRoles.includes( user.roles)) {
-      console.log('Check: ', user.roles, '\n')
+    // console.log(user.first_name, ' ', user.roles);
+    if (totalHours === 0 && !excludedRoles.includes( user.roles)) {
+      console.log('Check: ', user.first_name, ' ', user.roles, '\n')
       usersToNotify.push({
         ...user,
         totalHours,
