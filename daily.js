@@ -99,10 +99,10 @@ async function slackNotify(usersToNotify, timeSheetDateToCheck) {
         ? `<@${slackUser.id}>`
         : `${fullName}`;
     });
-   // console.log(
-    //  'usersToNotify',
-    //  usersToNotify.map((user) => user.slackUser)
-   // );
+    console.log(
+      'usersToNotify',
+      usersToNotify.map((user) => user.slackUser)
+    );
     const slackBlocks = [
       {
         type: 'section',
