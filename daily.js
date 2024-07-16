@@ -77,7 +77,7 @@ async function dteligence(timeSheetDateToCheck) {
       const userRoles = user.roles;
       const hasExcludedRole = userRoles.some(role => excludedRoles.includes(role));
 
-      if (hasExcludedRole) 
+      if (!hasExcludedRole) 
       {
         console.log('Check: ', user.first_name, ' ', user.roles, '\n')
         usersToNotify.push({
