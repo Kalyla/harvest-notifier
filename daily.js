@@ -85,7 +85,7 @@ async function slackNotify(usersToNotify, timeSheetDateToCheck) {
   console.log('slackNotify');
   if (usersToNotify && usersToNotify.length) {
     const slackUsers = await getSlackUsers(process.env.SLACK_TOKEN);
-    console.log('Slack Users:', slackUsers);
+    console.log('usersToNotify:', usersToNotify);
     usersToNotify.forEach((user) => {
       const fullName = `${user.first_name} ${user.last_name}`;
       const slackUser = slackUsers.find(
@@ -93,8 +93,7 @@ async function slackNotify(usersToNotify, timeSheetDateToCheck) {
           [
             slackUser.profile.real_name_normalized.toLowerCase(),
             slackUser.profile.display_name_normalized.toLowerCase(),
-          ].includes(fullName.toLowerCase()) ||
-          (slackUser.profile.email || '').toLowerCase() === user.email.toLowerCase()
+          ].includes(fullName.toLowerCase())
       );
       user.slackUser = slackUser
         ? `<@${slackUser.id}>`
