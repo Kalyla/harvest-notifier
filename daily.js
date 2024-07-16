@@ -63,7 +63,7 @@ async function dteligence(timeSheetDateToCheck) {
     timeSheetDateToCheck,
     timeSheetDateToCheck
   );
-  const rolesToNotify = ['', 'Frontend Developer'];
+  const rolesToNotify = ['Frontend Developer',' '];
   const usersToNotify = [];
   harvestUsers.forEach((user) => {
     // Filter reports by user_id
