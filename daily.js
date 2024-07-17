@@ -177,36 +177,33 @@ async function slackNotify(usersToNotify, timeSheetDateToCheck) {
         ],
       },
     ];
-    //  const response = await fetch(
-    //    `https://slack.com/api/chat.postMessage?channel=${
-    //      process.env.SLACK_CHANNEL
-    //    }&blocks=${encodeURIComponent(JSON.stringify(slackBlocks))}&pretty=1`,
-    //    {
-    //      method: 'post',
-    //      headers: {
-    //        'Content-Type': 'application/x-www-form-urlencoded',
-    //        Accept: 'application/json',
-    //        charset: 'utf-8',
-    //        Authorization: `Bearer ${process.env.SLACK_TOKEN}`,
-    //      },
-    //    }
-    //  );
-    // const data = await response.json();
-    // console.log('slackResponse', data);
+     const response = await fetch(
+       `https://slack.com/api/chat.postMessage?channel=${
+         process.env.SLACK_CHANNEL
+       }&blocks=${encodeURIComponent(JSON.stringify(slackBlocks))}&pretty=1`,
+       {
+         method: 'post',
+         headers: {
+           'Content-Type': 'application/x-www-form-urlencoded',
+           Accept: 'application/json',
+           charset: 'utf-8',
+           Authorization: `Bearer ${process.env.SLACK_TOKEN}`,
+         },
+       }
+     );
+    const data = await response.json();
+    console.log('slackResponse', data);
   } else return;
 }
 
 async function app() {
   let timeSheetDateToCheck;
   const weekday = moment().format('dddd');
-   console.log(weekday)
   if (!['суббота', 'воскресенье'].includes(weekday)) {
     if (['понедельник', 'вторник', 'среда', 'четверг', 'пятница'].includes(weekday)) {
       timeSheetDateToCheck = moment().subtract(0, 'days').format('YYYY-MM-DD');
-      console.log('первый ',  timeSheetDateToCheck)
     } else {
       timeSheetDateToCheck = moment().subtract(2, 'days').format('YYYY-MM-DD');
-      console.log('Второй ',  timeSheetDateToCheck)
     }
     const usersToNotify = [...(await dteligence(timeSheetDateToCheck))];
     await slackNotify(usersToNotify, timeSheetDateToCheck);
