@@ -169,7 +169,7 @@ async function slackNotify(usersToNotify, timeSheetDateToCheck) {
             },
             value: 'instructions',
             url: 'https://www.notion.so/stellarlabs/Time-tracking-e1eca92b7fc54752b0fa6af1c2eac5aa',
-            action_id: 'button-action',
+            action_id: 'button-action-2',
             style: 'primary',
           },
         ],
