@@ -201,7 +201,7 @@ async function app() {
   const weekday = moment().format('dddd');
    console.log(weekday)
   if (!['суббота', 'воскресенье'].includes(weekday)) {
-    if (['понедельник', 'вторник', 'четверг', 'пятница'].includes(weekday)) {
+    if (['понедельник', 'вторник', 'среда', 'четверг', 'пятница'].includes(weekday)) {
       timeSheetDateToCheck = moment().subtract(0, 'days').format('YYYY-MM-DD');
       console.log('первый ',  timeSheetDateToCheck)
     } else {
