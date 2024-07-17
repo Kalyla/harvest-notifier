@@ -1,6 +1,8 @@
 require('dotenv').config();
 const fetch = require('node-fetch');
 const moment = require('moment');
+require('moment/locale/ru');
+moment.locale('ru');
 
 async function getHarvestUsers(accountId, token, excludedUsers) {
   console.log('getHarvestUsers');
@@ -128,7 +130,7 @@ async function slackNotify(usersToNotify, timeSheetDateToCheck) {
           type: 'mrkdwn',
           text: `Я заметил, что следующие сотрудники еще не затрекали часов за ${moment(
             timeSheetDateToCheck
-          ).format('MMMM Do YYYY')}:`,
+          ).format('D MMMM')}:`,
         },
       },
       {
