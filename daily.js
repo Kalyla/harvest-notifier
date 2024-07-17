@@ -119,14 +119,14 @@ async function slackNotify(usersToNotify, timeSheetDateToCheck) {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: "*Hi there :sleeq: team! Here's a friendly reminder to complete your timesheets in Harvest. Remember to report your working hours every day to help us keep track of our progress.*",
+          text: "*Привет, я бот, который напоминает, что вы забыли включить трекер времени в Harvest. Не забывайте выбирать проект (модуль) и тип задачи правильно, чтобы затраченное время списывалось на проекты корректно.*",
         },
       },
       {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: `We noticed that the following people haven't reported their working hours for ${moment(
+          text: `Я заметил, что следующие сотрудники еще не затрекали часов за ${moment(
             timeSheetDateToCheck
           ).format('MMMM Do YYYY')}:`,
         },
@@ -142,7 +142,7 @@ async function slackNotify(usersToNotify, timeSheetDateToCheck) {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: 'Please take a moment to report your hours and react with :heavy_check_mark: to confirm that you have completed your timesheet. Thank you for your cooperation!',
+          text: 'Пожалуйста, откройте задачу в Jira и включите таймер.',
         },
       },
       {
@@ -160,25 +160,37 @@ async function slackNotify(usersToNotify, timeSheetDateToCheck) {
             action_id: 'button-action',
             style: 'primary',
           },
+          {
+            type: 'button',
+            text: {
+              type: 'plain_text',
+              text: ':sos: Инструкция',
+              emoji: true,
+            },
+            value: 'instructions',
+            url: 'https://www.notion.so/stellarlabs/Time-tracking-e1eca92b7fc54752b0fa6af1c2eac5aa',
+            action_id: 'button-action',
+            style: 'primary',
+          },
         ],
       },
     ];
-     const response = await fetch(
-       `https://slack.com/api/chat.postMessage?channel=${
-         process.env.SLACK_CHANNEL
-       }&blocks=${encodeURIComponent(JSON.stringify(slackBlocks))}&pretty=1`,
-       {
-         method: 'post',
-         headers: {
-           'Content-Type': 'application/x-www-form-urlencoded',
-           Accept: 'application/json',
-           charset: 'utf-8',
-           Authorization: `Bearer ${process.env.SLACK_TOKEN}`,
-         },
-       }
-     );
-    const data = await response.json();
-    console.log('slackResponse', data);
+    //  const response = await fetch(
+    //    `https://slack.com/api/chat.postMessage?channel=${
+    //      process.env.SLACK_CHANNEL
+    //    }&blocks=${encodeURIComponent(JSON.stringify(slackBlocks))}&pretty=1`,
+    //    {
+    //      method: 'post',
+    //      headers: {
+    //        'Content-Type': 'application/x-www-form-urlencoded',
+    //        Accept: 'application/json',
+    //        charset: 'utf-8',
+    //        Authorization: `Bearer ${process.env.SLACK_TOKEN}`,
+    //      },
+    //    }
+    //  );
+    // const data = await response.json();
+    // console.log('slackResponse', data);
   } else return;
 }
 
@@ -188,8 +200,10 @@ async function app() {
   if (!['Saturday', 'Sunday'].includes(weekday)) {
     if (['Tuesday', 'Wednesday', 'Thursday', 'Friday'].includes(weekday)) {
       timeSheetDateToCheck = moment().subtract(1, 'days').format('YYYY-MM-DD');
+      console.log('Сегодня: ', timeSheetDateToCheck) 
     } else {
       timeSheetDateToCheck = moment().subtract(3, 'days').format('YYYY-MM-DD');
+      console.log('Сегодня: ', timeSheetDateToCheck) 
     }
     const usersToNotify = [...(await dteligence(timeSheetDateToCheck))];
     await slackNotify(usersToNotify, timeSheetDateToCheck);
