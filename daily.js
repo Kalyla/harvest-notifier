@@ -199,7 +199,7 @@ async function app() {
   const weekday = moment().format('dddd');
   if (!['Saturday', 'Sunday'].includes(weekday)) {
     if (['Tuesday', 'Wednesday', 'Thursday', 'Friday'].includes(weekday)) {
-      timeSheetDateToCheck = moment().subtract(1, 'days').format('YYYY-MM-DD');
+      timeSheetDateToCheck = moment().subtract(0, 'days').format('YYYY-MM-DD');
       console.log('Сегодня: ', timeSheetDateToCheck) 
     } else {
       timeSheetDateToCheck = moment().subtract(3, 'days').format('YYYY-MM-DD');
