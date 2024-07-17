@@ -199,6 +199,7 @@ async function slackNotify(usersToNotify, timeSheetDateToCheck) {
 async function app() {
   let timeSheetDateToCheck;
   const weekday = moment().format('dddd');
+   console.log(weekday)
   if (!['Суббота', 'Воскресенье'].includes(weekday)) {
     if (['Понедельник', 'Вторник', 'Четверг', 'Пятница'].includes(weekday)) {
       timeSheetDateToCheck = moment().subtract(0, 'days').format('YYYY-MM-DD');
