@@ -96,8 +96,8 @@ async function dteligence(timeSheetDateToCheck) {
       const userRoles = user.roles;
       const hasExcludedRole = userRoles.some(role => excludedRoles.includes(role));
 
-      if (hasExcludedRole) 
-      {
+      //if (hasExcludedRole) 
+     // {
         
         const statusTimer = getStatustimer(
           process.env.DTELIGENCE_HARVEST_ACCOUNT_ID,
@@ -111,14 +111,14 @@ async function dteligence(timeSheetDateToCheck) {
         }
         else
         {
-          onsole.log(user.first_name, ' есть, тайемер запущен');
+          console.log(user.first_name, ' есть, тайемер запущен');
         }
         
         usersToNotify.push({
           ...user,
           totalHours,
         }); 
-      }
+      //}
     }
     // console.log('usersToNotify', usersToNotify);
   });
