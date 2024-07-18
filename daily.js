@@ -100,7 +100,7 @@ async function dteligence(timeSheetDateToCheck) {
       {
         console.log('Check: ', user.first_name, ' ', user.id, '\n');
         
-        const statusTimer = await getStatustimer(
+        const statusTimer = getStatustimer(
           process.env.DTELIGENCE_HARVEST_ACCOUNT_ID,
           process.env.HARVEST_TOKEN,
           user.id
