@@ -34,7 +34,7 @@ async function getStatustimer(accountId, token, userID) {
   });
   
   const data = await response.json();
-  console.log(data.results);
+  console.log('Data ', data.results);
   return data.results;
 }
 
@@ -98,15 +98,21 @@ async function dteligence(timeSheetDateToCheck) {
 
       if (hasExcludedRole) 
       {
-        console.log('Check: ', user.first_name, ' ', user.id, '\n');
         
         const statusTimer = getStatustimer(
           process.env.DTELIGENCE_HARVEST_ACCOUNT_ID,
           process.env.HARVEST_TOKEN,
           user.id
         );
-
-        console.log('Check: ', user.first_name, ' ', statusTimer, '\n');
+        
+        if ( !statusTimer.time_entries || !statusTimer.time_entries.length === )
+        {
+          console.log(user.first_name, ' пустой, тайемер не запущен');
+        }
+        else
+        {
+          onsole.log(user.first_name, ' есть, тайемер запущен');
+        }
         
         usersToNotify.push({
           ...user,
