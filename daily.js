@@ -123,7 +123,7 @@ async function dteligence(timeSheetDateToCheck) {
       }
     }
     // console.log('usersToNotify', usersToNotify);
-  });
+  }
   return usersToNotify;
 }
 
