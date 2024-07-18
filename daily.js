@@ -98,7 +98,7 @@ async function dteligence(timeSheetDateToCheck) {
       //if (hasExcludedRole) 
      // {
         
-        const statusTimer = await getStatustimer(
+        const statusTimer = getStatustimer(
           process.env.DTELIGENCE_HARVEST_ACCOUNT_ID,
           process.env.HARVEST_TOKEN,
           user.id
