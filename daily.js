@@ -104,7 +104,7 @@ async function dteligence(timeSheetDateToCheck) {
           user.id
         );
 
-        console.log(statusTimer)
+        console.log('Prechceck', statusTimer.time_entries)
       
         if ( !statusTimer.time_entries || !statusTimer.time_entries.length )
         {
