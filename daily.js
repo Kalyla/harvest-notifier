@@ -21,6 +21,25 @@ async function getHarvestUsers(accountId, token, excludedUsers) {
   );
 }
 
+async function getStatustimer(accountId, token, userID) {
+  console.log('getStatustimer');
+  const response = await fetch(
+    `https://api.harvestapp.com/v2/time_entries?user_id=${userID}&is_running=true`, 
+    {
+    method: 'get',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      'Harvest-Account-Id': accountId,
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  
+  const data = await response.json();
+  console.log(data);
+  return data;
+}
+
 async function getHarvestTeamTimeReport(accountId, token, dateFrom, dateTo) {
   console.log('getHarvestTeamTimeReport');
   const response = await fetch(
@@ -81,7 +100,16 @@ async function dteligence(timeSheetDateToCheck) {
 
       if (hasExcludedRole) 
       {
-        console.log('Check: ', user.first_name, ' ', user.roles, '\n')
+        console.log('Check: ', user.first_name, ' ', user.id, '\n')
+        
+        const statusTimer = await getStatustimer(
+          process.env.DTELIGENCE_HARVEST_ACCOUNT_ID,
+          process.env.HARVEST_TOKEN,
+          user.id
+        )
+
+        console.log('Check: ', user.first_name, ' ', statusTimer, '\n')
+        
         usersToNotify.push({
           ...user,
           totalHours,
