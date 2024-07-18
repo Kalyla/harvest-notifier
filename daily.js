@@ -34,7 +34,6 @@ async function getStatustimer(accountId, token, userID) {
   });
   
   const data = await response.json();
-  console.log('Data ', data.time_entries);
   return data.time_entries;
 }
 
@@ -105,7 +104,7 @@ async function dteligence(timeSheetDateToCheck) {
           user.id
         );
 
-        console.log(statusTimer.time_entries)
+        console.log(statusTimer)
       
         if ( !statusTimer.time_entries || !statusTimer.time_entries.length )
         {
