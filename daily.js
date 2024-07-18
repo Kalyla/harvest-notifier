@@ -23,9 +23,7 @@ async function getHarvestUsers(accountId, token, excludedUsers) {
 
 async function getStatustimer(accountId, token, userID) {
   console.log('getStatustimer');
-  const response = await fetch(
-    `https://api.harvestapp.com/v2/time_entries?user_id=${userID}&is_running=true`, 
-    {
+  const response = await fetch(`https://api.harvestapp.com/v2/time_entries?user_id=${userID}&is_running=true`, {
     method: 'get',
     headers: {
       'Content-Type': 'application/json',
