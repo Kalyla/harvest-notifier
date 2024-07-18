@@ -98,13 +98,13 @@ async function dteligence(timeSheetDateToCheck) {
       //if (hasExcludedRole) 
      // {
         
-        const statusTimer = getStatustimer(
+        const statusTimer = await getStatustimer(
           process.env.DTELIGENCE_HARVEST_ACCOUNT_ID,
           process.env.HARVEST_TOKEN,
           user.id
         );
 
-        console.log('Prechceck', statusTimer.time_entries)
+        console.log('Prechceck', statusTimer)
       
         if ( !statusTimer.time_entries || !statusTimer.time_entries.length )
         {
