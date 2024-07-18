@@ -103,25 +103,18 @@ async function dteligence(timeSheetDateToCheck) {
           process.env.HARVEST_TOKEN,
           user.id
         );
-
-        console.log('Prechceck', statusTimer)
       
         if ( !statusTimer || !statusTimer.length )
         {
           console.log(user.first_name, ' пустой, тайемер не запущен');
+          usersToNotify.push({
+            ...user,
+            totalHours,
+          }); 
         }
-        else
-        {
-          console.log(user.first_name, ' есть, тайемер запущен');
-        }
-        
-        usersToNotify.push({
-          ...user,
-          totalHours,
-        }); 
       }
     }
-    // console.log('usersToNotify', usersToNotify);
+    console.log('usersToNotify', usersToNotify);
   }
   return usersToNotify;
 }
