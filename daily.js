@@ -107,7 +107,7 @@ async function dteligence(timeSheetDateToCheck) {
         console.log('Prechceck', statusTimer)
       
         //if ( !statusTimer.time_entries || !statusTimer.time_entries.length )
-        if (statusTimer)
+        if (!statusTimer)
         {
           console.log(user.first_name, ' пустой, тайемер не запущен');
         }
