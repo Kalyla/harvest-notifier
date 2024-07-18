@@ -104,7 +104,9 @@ async function dteligence(timeSheetDateToCheck) {
           process.env.HARVEST_TOKEN,
           user.id
         );
-        
+
+        console.log(statusTimer.time_entries)
+      
         if ( !statusTimer.time_entries || !statusTimer.time_entries.length )
         {
           console.log(user.first_name, ' пустой, тайемер не запущен');
