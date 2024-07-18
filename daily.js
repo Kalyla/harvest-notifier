@@ -100,15 +100,15 @@ async function dteligence(timeSheetDateToCheck) {
 
       if (hasExcludedRole) 
       {
-        console.log('Check: ', user.first_name, ' ', user.id, '\n')
+        console.log('Check: ', user.first_name, ' ', user.id, '\n');
         
         const statusTimer = await getStatustimer(
           process.env.DTELIGENCE_HARVEST_ACCOUNT_ID,
           process.env.HARVEST_TOKEN,
           user.id
-        )
+        );
 
-        console.log('Check: ', user.first_name, ' ', statusTimer, '\n')
+        console.log('Check: ', user.first_name, ' ', statusTimer, '\n');
         
         usersToNotify.push({
           ...user,
