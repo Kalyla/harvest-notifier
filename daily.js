@@ -34,8 +34,8 @@ async function getStatustimer(accountId, token, userID) {
   });
   
   const data = await response.json();
-  console.log(data);
-  return data;
+  console.log(data.results);
+  return data.results;
 }
 
 async function getHarvestTeamTimeReport(accountId, token, dateFrom, dateTo) {
