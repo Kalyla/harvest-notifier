@@ -84,7 +84,7 @@ async function dteligence(timeSheetDateToCheck) {
   
   const excludedRoles = ['DevOps','QA Engineer','ML Engineer','Backend Developer','Frontend Developer'];
   const usersToNotify = [];
-  harvestUsers.forEach((user) => {
+  for (const user of harvestUsers) {
     // Filter reports by user_id
     const timeReports = harvestTeamTimeReport.filter((t) => t.user_id === user.id);
     // Sum up the total_hours from each filtered report
