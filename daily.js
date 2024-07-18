@@ -95,10 +95,10 @@ async function dteligence(timeSheetDateToCheck) {
       const userRoles = user.roles;
       const hasExcludedRole = userRoles.some(role => excludedRoles.includes(role));
 
-      //if (hasExcludedRole) 
-     // {
+      if (hasExcludedRole) 
+      {
         
-        const statusTimer = getStatustimer(
+        const statusTimer = await getStatustimer(
           process.env.DTELIGENCE_HARVEST_ACCOUNT_ID,
           process.env.HARVEST_TOKEN,
           user.id
@@ -106,7 +106,8 @@ async function dteligence(timeSheetDateToCheck) {
 
         console.log('Prechceck', statusTimer)
       
-        if ( !statusTimer.time_entries || !statusTimer.time_entries.length )
+        //if ( !statusTimer.time_entries || !statusTimer.time_entries.length )
+        if (statusTimer)
         {
           console.log(user.first_name, ' пустой, тайемер не запущен');
         }
@@ -119,7 +120,7 @@ async function dteligence(timeSheetDateToCheck) {
           ...user,
           totalHours,
         }); 
-      //}
+      }
     }
     // console.log('usersToNotify', usersToNotify);
   });
