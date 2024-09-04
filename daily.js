@@ -202,23 +202,23 @@ async function slackNotify(usersToNotify, timeSheetDateToCheck) {
         ],
       },
     ];
-     const response = await fetch(
-       `https://slack.com/api/chat.postMessage?channel=${
-         process.env.SLACK_CHANNEL
-       }&blocks=${encodeURIComponent(JSON.stringify(slackBlocks))}&pretty=1`,
-       {
-         method: 'post',
-         headers: {
-           'Content-Type': 'application/x-www-form-urlencoded',
-           Accept: 'application/json',
-           charset: 'utf-8',
-           Authorization: `Bearer ${process.env.SLACK_TOKEN}`,
-         },
-       }
-     );
-    const data = await response.json();
-    console.log('slackResponse', data);
-  } else return;
+  //    const response = await fetch(
+  //      `https://slack.com/api/chat.postMessage?channel=${
+  //        process.env.SLACK_CHANNEL
+  //      }&blocks=${encodeURIComponent(JSON.stringify(slackBlocks))}&pretty=1`,
+  //      {
+  //        method: 'post',
+  //        headers: {
+  //          'Content-Type': 'application/x-www-form-urlencoded',
+  //          Accept: 'application/json',
+  //          charset: 'utf-8',
+  //          Authorization: `Bearer ${process.env.SLACK_TOKEN}`,
+  //        },
+  //      }
+  //    );
+  //   const data = await response.json();
+  //   console.log('slackResponse', data);
+  // } else return;
 }
 
 async function app() {
@@ -231,7 +231,7 @@ async function app() {
       timeSheetDateToCheck = moment().subtract(2, 'days').format('YYYY-MM-DD');
     }
     const usersToNotify = [...(await dteligence(timeSheetDateToCheck))];
-    await slackNotify(usersToNotify, timeSheetDateToCheck);
+    // await slackNotify(usersToNotify, timeSheetDateToCheck);
     process.exit();
   }
 }
