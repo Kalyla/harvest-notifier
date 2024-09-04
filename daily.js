@@ -89,6 +89,7 @@ async function dteligence(timeSheetDateToCheck) {
     const timeReports = harvestTeamTimeReport.filter((t) => t.user_id === user.id);
     // Sum up the total_hours from each filtered report
     const totalHours = timeReports.reduce((sum, report) => sum + report.total_hours, 0);
+    console.log(user.first_name, ' ', totalHours);
     // Filter developers with totalHours equal to 0
     // console.log(user.first_name, ' ', user.roles);
     if (totalHours === 0 || totalHours % 1 == 0) {
