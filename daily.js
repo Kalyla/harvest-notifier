@@ -231,7 +231,7 @@ async function app() {
       timeSheetDateToCheck = moment().subtract(2, 'days').format('YYYY-MM-DD');
     }
     const usersToNotify = [...(await dteligence(timeSheetDateToCheck))];
-    // await slackNotify(usersToNotify, timeSheetDateToCheck);
+    await slackNotify(usersToNotify, timeSheetDateToCheck);
     process.exit();
   }
 }
